@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+        <div class="container mt-2">
+            <h1>Decks</h1>
+
+            {% if mensajes_exito %}
+                {% for mensaje in mensajes_exito %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ mensaje }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if mensajes_fallo %}
+                {% for mensaje in mensajes_fallo %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ mensaje }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Tabla donde se muestran los Decks del usuario -->
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Nombre del Deck</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for deck in decks %}
+                            <tr>
+                                <td><strong>{{ deck.nombre }}</strong></td>
+                                <td>
+                                    <a href="{% url 'Deck:ver_flashcards' deck.id %}" class="btn btn-primary">Ver</a>
+                                    <a href="{% url 'Deck:eliminar_deck' deck.id %}" class="btn btn-danger">Eliminar</a>
+                                    <a href="{% url 'Deck:estudiar_deck' deck.id %}" class="btn btn-secondary">Estudiar Deck</a>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="col-12 text-center mt-2">
+                <!-- Boton para crear un nuevo Deck -->
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#creardeck">
+                    + Agregar un nuevo Deck
+                </button>
+            </div>  
+        
+            <!-- Modal para crear un nuevo Deck -->
+            <div class="modal fade" id="creardeck" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear nuevo Deck</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{% url 'Deck:agregar_deck' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Crear</button>
+                        </form>
+                    </div>
+                    
+                </div>
+                </div>
+            </div>
+
+        </div>
+    
+        {% else %}
+            <div class="container m-3">
+                <h2 class="fs-2">Propósito del sistema</h2>
+                <p class="fs-5">Esta aplicación proporciona una herramienta eficaz para estudiar cualquier tema. Su funcionamiento se basa en el uso de "Decks" (conjuntos de tarjetas) y "Flashcards" (tarjetas de pregunta y respuesta). Estas tarjetas permiten organizar y revisar el contenido de manera estructurada, facilitando así el proceso de aprendizaje.</p>
+                <br>
+                <h2 class="fs-2">¿Cómo funciona?</h2>
+                <ol>
+                    <li class="fs-5">Comienza creando tu cuenta e iniciando sesión en el sistema.</li>
+                    <li class="fs-5">Crea un nuevo conjunto de tarjetas (Deck).</li>
+                    <li class="fs-5">Asocia tarjetas de pregunta y respuesta (Flashcards) al conjunto.</li>
+                    <li class="fs-5">¡Listo! Inicia tu estudio y repasa los conceptos fundamentales para mejorar tu aprendizaje.</li>
+                </ol>
+            </div>
+        {% endif %}
+
+{% endblock %}

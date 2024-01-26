@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}FlashCards{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-3">
+
+        <h1>Deck: {{ deck.nombre }}</h1>
+
+        <!-- Tabla donde se muestran las flashCards de un Deck -->
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Parte frontal</th>
+                    <th scope="col">Parte tracera</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flashcard in flashcards %}
+                        <tr>
+                            <td>{{ flashcard.parte_frontal }}</td>
+                            <td>{{ flashcard.parte_trasera }}</td>
+                            <td> <a href="{% url 'Deck:eliminar_flashcard' deck.id flashcard.id %}" class="btn btn-danger">Eliminar</a> </td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="col-12 text-center mt-2">
+            <!-- Botón para crear una nueva Flashcard -->
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#crearflashcard">
+                + Agregar una nueva flashcard
+            </button>
+        </div>
+
+        <!-- Modal para crear nuevas Flashcards -->
+        <div class="modal fade" id="crearflashcard" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear nuevo Deck</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <form method="post" action="{% url 'Deck:agregar_flashcard' deck.id  %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                   </form>
+                </div>
+                
+            </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

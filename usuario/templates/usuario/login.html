@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <form method="post"  style="width: 500px; margin: 0 auto;" action="{% url 'usuario:login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div style="display: flex;justify-content: space-between;align-items: center;">
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                <a href="{% url 'usuario:register' %}">¿Aún no tienes una cuenta?</a>
+            </div>
+        </form> 
+    </div>
+
+    <!-- Script para agregar estilos -->
+    <script>
+        usernameInput = document.getElementById("id_username");
+        usernameInput.classList.add("form-control");
+    
+        passwordInput = document.getElementById("id_password");
+        passwordInput.classList.add("form-control");
+    </script>
+{% endblock %}

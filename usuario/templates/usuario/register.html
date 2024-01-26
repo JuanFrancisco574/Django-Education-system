@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <form method="post" style="width: 500px; margin: 0 auto;" action="{% url 'usuario:register' %}">
+            {% csrf_token %}
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            <br>
+
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+            <br>
+
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+            <br>
+            
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+        </form>
+    </div>
+
+    <!-- Script para agregar estilos -->
+    <script>
+        usernameInput = document.getElementById("id_username");
+        usernameInput.classList.add("form-control");
+    
+        password1Input = document.getElementById("id_password1");
+        password1Input.classList.add("form-control");
+    
+        password2Input = document.getElementById("id_password2");
+        password2Input.classList.add("form-control");
+    </script>
+
+{% endblock %}
+
+
+
+
+
+

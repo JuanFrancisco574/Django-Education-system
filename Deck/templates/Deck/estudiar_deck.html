@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Estudiar Deck{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5" style="padding: 30px;background-color: #BAC9D6;">
+
+        <div class="col-12 text-center mt-2">
+            <a href="{% url 'Deck:terminar_estudio' deck.id %}" class="btn btn-danger" >Terminar</a>
+            <br>
+            <h5 class="current">
+                Flashcard {{ flashcard_objects.number }} de {{ flashcard_objects.paginator.num_pages }}.
+            </h5>
+        </div>
+
+        {% for flashcard in flashcard_objects %}
+            <div class="col-12 text-center mt-2">
+                <h4>{{ flashcard.parte_frontal }}</h4>
+            </div>
+            <div class="col-12 text-center mt-5">
+                <h4 style="display: none;" id="respuesta">{{ flashcard.parte_trasera }}</h4>
+            </div>
+        {% endfor %}
+
+        <div class="col-12 text-center mt-5" style="display: flex; justify-content: space-between;">
+            {% if flashcard_objects.has_previous %}
+                <a href="?pagina={{ flashcard_objects.previous_page_number }}" class="btn btn-primary"> Anterior</a>
+            {% endif %}
+            
+            <button href="" class="btn btn-secondary" id="btnMostrarRespuesta">Mostrar respuesta</button>
+
+            {% if flashcard_objects.has_next %}
+                <a href="?pagina={{ flashcard_objects.next_page_number }}" class="btn btn-primary">Siguiente </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        btnMostrarRespuesta = document.getElementById("btnMostrarRespuesta");
+        btnMostrarRespuesta.addEventListener("click",function(){
+            respuesta = document.getElementById("respuesta");
+            respuesta.style.display = "inline";
+        });
+    </script>
+
+{% endblock %}
