@@ -4,7 +4,7 @@ Esta aplicación proporciona una herramienta eficaz para estudiar cualquier tema
 # Instalación
 1. Instala los requerimientos del proyecto
 ``` python
-pip install -r requirements
+pip install -r requirements.txt
 ```
 2. Crea y aplica las migraciones
 ``` python
