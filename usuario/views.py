@@ -23,13 +23,13 @@ def home(request):
             context['mensajes_exito'].append(mensaje)
         else:
             context['mensajes_fallo'].append(mensaje)
-    
+
     # Si el usuario está autenticado extraemos todos sus Decks
     context['decks'] = {}
     if request.user.is_authenticated:
         context['decks'] = Deck.objects.filter(usuario=request.user)
 
-    return render(request,'usuario/index.html',context)
+    return render(request, 'usuario/index.html', context)
 
 
 def user_login(request):
@@ -37,7 +37,8 @@ def user_login(request):
         form = UserLoginForm(request, request.POST)
         if form.is_valid():
             # Hacemos el Login
-            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            user = authenticate(
+                request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             login(request, user)
             return redirect('usuario:home')  # Redirige a la página principal
     else:
@@ -66,4 +67,4 @@ def logout_view(request):
 
 @login_required
 def como_funciona_view(request):
-    return render(request,'usuario/como_funciona.html')
+    return render(request, 'usuario/como_funciona.html')

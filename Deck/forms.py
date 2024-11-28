@@ -1,5 +1,6 @@
 from django import forms
-from .models import Deck,FlashCard
+from .models import Deck, FlashCard
+
 
 class DeckForm(forms.ModelForm):
     class Meta:
@@ -21,10 +22,11 @@ class DeckForm(forms.ModelForm):
             ),
         }
 
+
 class FlashCardForm(forms.ModelForm):
     class Meta:
         model = FlashCard
-        fields = ['parte_frontal','parte_trasera']
+        fields = ['parte_frontal', 'parte_trasera']
 
         widgets = {
             "parte_frontal": forms.Textarea(

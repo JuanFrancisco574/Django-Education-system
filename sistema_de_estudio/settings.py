@@ -28,7 +28,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = []
-CSRF_TRUSTED_ORIGINS.append( os.getenv("CSRF_TRUSTED_ORIGINS") )
+CSRF_TRUSTED_ORIGINS.append(os.getenv("CSRF_TRUSTED_ORIGINS"))
 
 
 # Application definition
@@ -85,10 +85,10 @@ WSGI_APPLICATION = "sistema_de_estudio.wsgi.application"
 
 DATABASES = {
     # Configuration witnout a real DB
-    #"default": {
+    # "default": {
     #    "ENGINE": "django.db.backends.sqlite3",
     #    "NAME": BASE_DIR / "db.sqlite3",
-    #}
+    # }
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("DB_NAME"),
@@ -139,7 +139,7 @@ STATIC_URL = "static/"
 if os.getenv("STATIC_ROOT"):
     STATIC_ROOT = os.getenv("STATIC_ROOT")
 else:
-    STATIC_ROOT = os.path.join(BASE_DIR,"static")
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

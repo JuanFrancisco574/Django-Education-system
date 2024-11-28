@@ -6,7 +6,9 @@ from django.contrib.auth.models import User
 class UserLoginForm(AuthenticationForm):
     pass
 
-# Form para realizar el registro del usuario 
+# Form para realizar el registro del usuario
+
+
 class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
