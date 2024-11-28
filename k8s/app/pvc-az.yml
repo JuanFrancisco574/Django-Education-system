@@ -1,0 +1,13 @@
+# Persistence volume claim for azure kubernetes service.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: staticfiles-pvc
+  namespace: django-app
+spec:
+  accessModes:
+    - ReadWriteMany # Supported: ReadWriteOnce, ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: staticfiles-pv

@@ -23,9 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-_l06=df2#d*orn^2(_21yy*07bdk+bdosl^&0s3q&ddke4(qe1"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS.append( os.getenv("CSRF_TRUSTED_ORIGINS") )
 
 
 # Application definition
@@ -81,9 +84,18 @@ WSGI_APPLICATION = "sistema_de_estudio.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+    # Configuration witnout a real DB
+    #"default": {
+    #    "ENGINE": "django.db.backends.sqlite3",
+    #    "NAME": BASE_DIR / "db.sqlite3",
+    #}
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USERNAME"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
 
@@ -123,6 +135,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+if os.getenv("STATIC_ROOT"):
+    STATIC_ROOT = os.getenv("STATIC_ROOT")
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR,"static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

@@ -1,0 +1,15 @@
+# Load balancer to expose the DJango app with a basic load balancer.
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+  namespace: django-app
+  labels:
+    app: app-svc
+spec:
+  type: LoadBalancer # Expose service using a LoadBalancer
+  ports:
+    - port: 8000         # Port exposed by the service
+      targetPort: 8000   # Port on the pod
+  selector:
+    app: django-application # Match Pods with this label

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app-deploy
+  namespace: django-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-application
+  template:
+    metadata:
+      labels:
+        app: django-application
+    spec:
+      volumes:
+        - name: staticfiles
+          persistentVolumeClaim:
+            claimName: staticfiles-pvc
+      containers:
+        - image: juan574/educational-system:1.0.3
+          imagePullPolicy: Always
+          name: django-app-container
+          envFrom:
+            - configMapRef:
+                name: app-cm
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - mountPath: "/data/static"
+              name: staticfiles
